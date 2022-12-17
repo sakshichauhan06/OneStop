@@ -2,6 +2,24 @@ import { createError } from "../error.js";
 import User from "../models/User.js";
 import Video from "../models/Video.js";
 
+export const insertUser = async (req, res) => {
+  try {
+
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      mobile: req.body.mobile,
+      password: req.body.password
+    })
+
+    const result = await user.save()
+    res.send("Registration has been successfull.")
+
+  } catch (error) {
+    res.send(error.message)
+  }
+}
+
 export const update = async (req, res, next) => {
     if (req.params.id === req.user.id) {
       try {

@@ -7,8 +7,15 @@ import commentRoutes from "./routes/comments.js";
 import authRoutes from "./routes/auth.js"
 import cookieParser from "cookie-parser";
 
+// const express = require("express")
+
 const app = express()
 dotenv.config()
+
+// const bodyParser = require('body-parser')
+
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended: true}))
 
 const connect = () => {
     mongoose
@@ -28,6 +35,7 @@ app.use("/api/users", userRoutes)
 app.use("/api/videos", videoRoutes)
 app.use("/api/comments", commentRoutes)
 
+
 app.use((err, req, res, next) => {
     const status = err.status || 500;
     const message = err.message || "Somenthing went wrong!";
@@ -36,6 +44,17 @@ app.use((err, req, res, next) => {
         status,
         message
     })
+})
+
+app.set('view engine', 'pug')
+app.set('views', './views')
+
+app.get('/register', function(req, res) {
+    res.render('register')
+})
+
+app.post('/register', function(req, res) {
+    res.send(req.body)
 })
 
 app.listen(8800, ()=> {
